@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var PubSub = {
+            list: [],
+            publish: function (type,data) {
+                if (!type) return
+                this.list.forEach(item => {
+                    if (item.type == type) {
+                        item.fn(data)
+                    }
+                })
+            },
+            subscribe: function (type, fn) {
+                if(!type || !fn )return
+                this.list.push({ type, fn })
+            },
+            cancelSub(type){
+                this.list = this.list.filter(item => item.type !== type)
+            }
+        }
+
+        function testA(data) {
+            console.log("订阅者A", data);
+        }
+        function testB(data) {
+            console.log("订阅者B", data);
+        }
+        PubSub.subscribe("AAA", testA)
+        PubSub.cancelSub("AAA")
+        PubSub.subscribe("BBB", testB)
+
+    </script>
+</body>
+
+</html>

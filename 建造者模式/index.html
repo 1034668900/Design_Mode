@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 构建
+        class NavBar {
+            init() {
+                console.log("NavBar的初始化");
+            }
+            // 异步
+            getData() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve()
+                        console.log("NavBar异步获取到数据");
+                    }, 1000)
+                })
+            }
+            // 异步
+            render() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve()
+                        console.log("NvaBar异步渲染视图");
+                    }, 1000)
+                })
+
+            }
+        }
+        class List {
+            init() {
+                console.log("List的初始化");
+            }
+            // 异步
+            getData() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve()
+                        console.log("List异步获取到数据");
+                    }, 1000)
+                })
+            }
+            // 异步
+            render() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve()
+                        console.log("List异步渲染视图");
+                    }, 1000)
+                })
+
+            }
+        }
+
+
+        // 表示
+        class Operator {
+            async startBuild(buildObj) {
+                await buildObj.init()
+                await buildObj.getData()
+                await buildObj.render()
+            }
+        }
+
+        var operator = new Operator()
+        var navBar = new NavBar()
+        var list = new List()
+        operator.startBuild(navBar)
+        operator.startBuild(list)
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .header {
+            display: flex;
+            width: 500px;
+        }
+
+        .header li {
+            flex: 1;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        .box {
+            position: relative;
+            height: 200px;
+        }
+
+        .box li {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 500px;
+            height: 200px;
+            background-color: yellow;
+            display: none;
+        }
+
+        .header .active {
+            background-color: red;
+        }
+
+        .box .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <ul class="header">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+        <ul class="box">
+            <li class="active">111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+            <li>666</li>
+        </ul>
+    </div>
+
+    <div class="container2">
+        <ul class="header">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+        </ul>
+        <ul class="box">
+            <li class="active">111</li>
+            <li>222</li>
+            <li>333</li>
+            <li>444</li>
+            <li>555</li>
+            <li>666</li>
+        </ul>
+    </div>
+
+    <script>
+        // 原型模式即 构造模式和原型相结合
+        /**
+         * @selector 选择的类名
+         * @type 绑定事件的类型
+         */
+        function Tabs(selector,type){
+            // 属性绑定在this上是为了在原型上能够通过this访问
+            this.selector = document.querySelector(selector)
+            this.type = type
+            // 这里不能用document.querySelectorAll(),选择范围为整个DOM对象了
+            this.header = this.selector.querySelectorAll(".header li")
+            this.box = this.selector.querySelectorAll(".box li")
+            this.change()
+        }
+        // 将事件绑定在原型对象上
+        Tabs.prototype.change = function() {
+            // 遍历绑定事件
+            for(let i=0;i<this.header.length;i++){
+                this.header[i].addEventListener(this.type,() => {
+                    // 移除所有激活项
+                    for(let j=0;j<this.header.length;j++){
+                        this.header[j].classList.remove('active')
+                        this.box[j].classList.remove('active')
+                    }
+                    // 给指定项添加激活类
+                    this.header[i].classList.add('active')
+                    this.box[i].classList.add('active')
+                },false)
+            }
+        }
+        new Tabs('.container1','click')
+        new Tabs('.container2','mouseenter')
+    </script>
+</body>
+</html>

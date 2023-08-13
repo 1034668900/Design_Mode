@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 单例模式(利用闭包)
+        var singleObj = (function () {
+            var single = null
+            function User(name, age) {
+                this.name = name
+                this.age = age
+            }
+
+            return function (name, age) {
+                // 这里通过判断single是否存在来保证其唯一性,不然每次都会new一个新的对象
+                if (!single) {
+                    single = new User(name, age)
+                }
+                return single
+            }
+        })()
+
+        // 单例模式(利用类ES6写法),利用类是唯一的来实现
+        class Single{
+            constructor(name,age){
+                if(!Single.instance){
+                    this.name = name
+                    this.age = age
+                    // 一定要将刚创建的实例挂载到类上
+                    Single.instance = this
+                }
+                return Single.instance
+            }
+        }
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class Subject {
+            constructor() {
+                this.observers = []
+            }
+            // 添加观察者
+            add(observer) {
+                this.observers.push(observer)
+            }
+            // 移除观察者
+            remove(observer) {
+                this.observers = this.observers.filter(item => item !== observer)
+            }
+            // 触发更新
+            notify() {
+                this.observers.forEach(item => {
+                    item.update()
+                })
+            }
+        }
+
+        class Observer {
+            constructor(name) {
+                this.name = name
+            }
+            update() {
+                console.log("触发更新", this.name);
+            }
+        }
+
+        var subject = new Subject()
+        var observer1 = new Observer('fc')
+        var observer2 = new Observer('ly')
+        subject.add(observer1)
+        subject.add(observer2)
+        subject.remove(observer2)
+    </script>
+</body>
+
+</html>

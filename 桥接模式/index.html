@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 具体实现
+        const animation = {
+            bounce:{
+                show:function(){
+                    console.log("弹跳显示");
+                },
+                hide:function(){
+                    console.log("弹跳隐藏");
+                }
+            },
+            slide:{
+                show:function(){
+                    console.log("滑出显示");
+                },
+                hide:function(){
+                    console.log("滑出隐藏");
+                }
+            },
+            rotate:{
+                show:function(){
+                    console.log("旋转显示");
+                },
+                hide:function(){
+                    console.log("旋转隐藏");
+                }
+            },
+        }
+        
+        class Modal{
+            constructor(ele,animation){
+                this.ele = ele
+                this.animation = animation
+            }
+            // 抽象实现，具体实现在传入的animation中
+            show(){
+                console.log("对节点信息的处理",this.ele);
+                this.animation.show()
+            }
+            hide(){
+                console.log("对节点信息的处理",this.ele);
+                this.animation.hide()
+            }
+        }
+        var modal = new Modal("div",animation.rotate)
+        modal.show()
+        setTimeout(()=>{
+            modal.hide()
+        },3000)
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class UserFactory {
+            constructor(role, pages){
+                this.role = role
+                this.pages = pages
+            }
+            // 静态方法不能通过实例调用，只能由类本身调用
+            static createUser(role) {
+                switch (role) {
+                    case "superadmin": return new UserFactory("superadmin", ["pageA", "pageB", "pageC", "pageD"])
+                        break
+                    case "admin": return new UserFactory("admin", ["pageA", "pageB", "pageC"])
+                        break
+                    case "edit": return new UserFactory("edit", ["pageA", "pageB"])
+                        break
+                    default:
+                        break
+                }
+            }
+        }
+
+        var superadmin = UserFactory.createUser("superadmin")
+        var admin = UserFactory.createUser("admin")
+    </script>
+</body>
+
+</html>

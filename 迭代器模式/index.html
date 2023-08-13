@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var obj = {
+            name: "fc",
+            age: "22",
+            wife: "ly",
+            list: [4, 8, 9, 8, 5, 4],
+            [Symbol.iterator]: function () {
+                let index = 0
+                let keys = Object.keys(obj)
+                return {
+                    next: () => {
+                        if (index < keys.length) {
+                            
+                            return {
+                                value:this[keys[index++]],
+                                done:false
+                            }
+                        }else{
+                            return {
+                                value:undefined,
+                                done:true
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        var arr = [1, 2, 3]
+        for (let item of arr) {
+            console.log(item);
+        }
+        var it = obj[Symbol.iterator]()
+        console.log(it.next());
+        console.log(it.next());
+        console.log(it.next());
+        console.log(it.next());
+        console.log(it.next());
+
+     
+    </script>
+</body>
+
+</html>

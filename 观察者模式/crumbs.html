@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .header{
+            height: 30px;
+            background-color: aquamarine;
+        }
+        .container {
+            display: flex;
+            height: 500px;
+        }
+
+        .container .left {
+            width: 200px;
+            background-color: skyblue;
+            
+        }
+
+        .left ul li {
+            margin: 10px 50px 10px 20px;
+            list-style-type: none;
+        }
+
+        .right {
+            background-color: yellow;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header"></div>
+    <div class="container">
+        <div class="left">
+            <ul>
+                <li>首页</li>
+                <li>用户管理</li>
+                <li>权限管理</li>
+                <li>漏洞管理</li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="crumbs"></div>
+        </div>
+    </div>
+    <script>
+        class Subject {
+            constructor() {
+                this.observers = []
+            }
+            add(observer) {
+                this.observers.push(observer)
+            }
+            remove(observer) {
+                this.observers = this.observers.filter(item => item !== observer)
+            }
+            notify(data) {
+                this.observers.forEach(item => {
+                    item.update(data)
+                })
+            }
+        }
+        class Observer {
+            constructor(name) {
+                this.element = document.querySelector(name)
+            }
+            update(data) {
+                this.element.innerHTML = data
+                console.log("触发更新", data);
+            }
+        }
+        var subject = new Subject()
+        var observer1 = new Observer('.crumbs')
+        var observer2 = new Observer('.header')
+        subject.add(observer1)
+        subject.add(observer2)
+        var liList = document.querySelectorAll('.left li')
+        //  利用闭包解决var变量提升问题（用let更简单）
+        /*for(var i=0;i<liList.length;i++){
+            (function(i){
+                liList[i].onclick = function(){
+                    // 点击触发更新
+                subject.notify(liList[i].innerHTML)
+            }
+            })(i)
+        }*/
+        // 状态提升
+        document.querySelector('.left ul').onclick = function () {
+            if(event.target.innerHTML.length<10){
+                subject.notify(event.target.innerHTML)
+            }
+        }
+    </script>
+</body>
+
+</html>

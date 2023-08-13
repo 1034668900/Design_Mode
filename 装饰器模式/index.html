@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 实现在执行一个函数之前，可以让另一个函数在其之前或之后执行
+        Function.prototype.before = function(beforeFn){
+            var originFn = this
+            return function(){
+                // 先执行beforeFn函数
+                beforeFn.apply(this,arguments)
+                // 再执行原本的函数
+                return originFn.apply(this,arguments)
+            }
+        }
+        Function.prototype.after = function(afterFn){
+            var originFn = this
+            return function(){
+                // 先执行原本的函数
+                var res = originFn.apply(this,arguments)
+                // 再执行afterFn
+                afterFn.apply(this,arguments)
+                // 返回原本函数执行的结果
+                return res
+            }
+        }
+        function test(){
+            console.log("111");
+            return 1
+        }
+        var test1 = test.after(function(){
+            console.log('222');
+        })
+        
+        var test2 = test1.after(function(){
+            console.log('000');
+        })
+        test1()
+        //test2()
+    </script>
+</body>
+</html>

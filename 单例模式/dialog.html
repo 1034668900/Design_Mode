@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .dialog {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            background-color: aqua;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <button class="open">打开</button>
+    <button class="close">关闭</button>
+
+    <script>
+        var open = document.querySelector(".open")
+        var close = document.querySelector(".close")
+        const Dialog = (function(){
+            var instance = null
+            return function(){
+                if(!instance){
+                    instance = document.createElement('div')
+                    instance.innerText = '这是一个对话框'
+                    instance.className = 'dialog'
+                    instance.style.display = 'none'
+                    document.body.appendChild(instance)
+                }
+                return instance
+            }
+        })()
+        open.onclick = function(){
+            // 创建
+            var dialog = Dialog()
+            // 显示
+            dialog.style.display = 'block'
+        }
+        close.onclick = function(){
+            // 创建(还是同一个对话框)
+            var dialog = Dialog()
+            // 隐藏
+            dialog.style.display = 'none'
+        }
+    </script>
+</body>
+
+</html>

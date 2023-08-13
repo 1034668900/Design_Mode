@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .success {
+            background-color: aquamarine;
+        }
+
+        .failure {
+            background-color: red;
+        }
+
+        .inHand {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="myList"></ul>
+    <script>
+        var list = [{
+            title: "海贼王",
+            type: 1
+        },
+        {
+            title: "狐妖小红娘",
+            type: 2
+        },
+        {
+            title: "百妖谱",
+            type: 3
+        },
+        {
+            title: "一人之下",
+            type: 2
+        }
+        ]
+        var strategy = {
+            "1": {
+               content:"审核中",
+               className:'inHand'
+            },
+            "2":{
+               content:"已通过",
+               className:'success'
+            },
+            "3":{
+               content:"被驳回",
+               className:'failure'
+            },
+        }
+        document.querySelector("#myList").innerHTML = list.map(item => {
+            return `<li><div>${item.title}</div>
+            <div class="${strategy[item.type].className}">${strategy[item.type].content}</div></li>
+            `
+        }).join('')
+   </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 抽象类
+        class User{
+            constructor(name,role,pages){
+                this.name = name
+                this.role = role
+                this.pages = pages
+            }
+            welcome(){
+                console.log("欢饮回来~",this.name);
+            }
+            dataShow(){
+                throw new Error("test")
+            }
+        }
+        // 超级管理员类
+        class SuperAdmin extends User{
+            constructor(name){
+                super(name,"superadmin", ["pageA", "pageB", "pageC", "pageD"])
+            }
+            dataShow(){
+                console.log("您的身份是"+this.role+",您可以访问的页面为："+this.pages);
+            }
+            //写超级管理员特有的一些方法，例如权限管理等等
+            addRight(){
+
+            }
+            addUser(){
+
+            }
+        }
+        // 管理员类
+        class Admin extends User{
+            constructor(name){
+                super(name,"admin", ["pageA", "pageB", "pageC"])
+            }
+            dataShow(){
+                console.log("您的身份是"+this.role+",您可以访问的页面为："+this.pages);
+            }
+            addUser(){
+                
+            }
+        }
+        // 普通用户类
+        class Editor extends User{
+            constructor(name){
+                super(name,"editor", ["pageA", "pageB"])
+            }
+            dataShow(){
+                console.log("您的身份是"+this.role+",您可以访问的页面为："+this.pages);
+            }
+        }
+
+        // 根据传入的角色，获取对应的类
+        function getAbstractUserFactory(role){
+            switch (role) {
+                    case "superadmin": return  SuperAdmin
+                        break
+                    case "admin": return  Admin
+                        break
+                    case "editor": return  Editor
+                        break
+                    default:
+                        break
+                }
+        }
+        
+        var superUserClass = getAbstractUserFactory("superadmin")
+        var adminUserClass = getAbstractUserFactory("admin")
+        var editorUserClass = getAbstractUserFactory("editor")
+        var superadmin = new superUserClass("fc")
+        var admin = new adminUserClass("ly")
+        var editor = new editorUserClass("fy")
+        superadmin.dataShow()
+        admin.dataShow()
+        editor.welcome()
+    </script>
+</body>
+</html>
